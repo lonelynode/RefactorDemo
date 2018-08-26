@@ -14,28 +14,11 @@ public class HtmlStatement extends AbstractStatement{
         double totalAmount = 0;
         int frequentRenterPoints = 0;
         Enumeration rentals = customer.getRentals().elements();
-        String result = "<p><H1>Rental Record for <EM>" + customer.getName() + "</EM></H1</P>\n";
+        String result = headerContent(customer);
         while (rentals.hasMoreElements()) {
             double thisAmount = 0;
             Rental each = (Rental) rentals.nextElement();
-
-            switch (each.getMovie().getPriceCode()) {
-                case Movie.REGULAR:
-                    thisAmount += 2;
-                    if (each.getDayRented() > 2) {
-                        thisAmount += (each.getDayRented() - 2) * 1.5;
-                    }
-                    break;
-                case Movie.NEW_RELEASE:
-                    thisAmount += each.getDayRented() * 3;
-                    break;
-                case Movie.CHILDRENS:
-                    thisAmount += 1.5;
-                    if (each.getDayRented() > 3) {
-                        thisAmount += (each.getDayRented() - 3) * 1.5;
-                    }
-                    break;
-            }
+           thisAmount = countAmount(each, thisAmount);
             //add frequent renter points
             frequentRenterPoints++;
             //add bonus for a two day new release rental
@@ -48,6 +31,36 @@ public class HtmlStatement extends AbstractStatement{
         }
 
         //add footer lines
+        return footerContent(result, totalAmount, frequentRenterPoints);
+    }
+
+    public double countAmount(Rental each, double thisAmount) {
+        switch (each.getMovie().getPriceCode()) {
+            case Movie.REGULAR:
+                thisAmount += 2;
+                if (each.getDayRented() > 2) {
+                    thisAmount += (each.getDayRented() - 2) * 1.5;
+                }
+                break;
+            case Movie.NEW_RELEASE:
+                thisAmount += each.getDayRented() * 3;
+                break;
+            case Movie.CHILDRENS:
+                thisAmount += 1.5;
+                if (each.getDayRented() > 3) {
+                    thisAmount += (each.getDayRented() - 3) * 1.5;
+                }
+                break;
+        }
+        return thisAmount;
+    }
+
+    public String headerContent(Customer customer) {
+        String result = "<p><H1>Rental Record for <EM>" + customer.getName() + "</EM></H1</P>\n";
+        return result;
+    }
+
+    public String footerContent(String result, double totalAmount, int frequentRenterPoints){
         result += "<P>You owed <EM>" + String.valueOf(totalAmount) + "</EM></P>\n";
         result += "<P>On this rental You earned<EM>" + String.valueOf(frequentRenterPoints)
                 + "</EM> frequent renter points</P>";
