@@ -100,19 +100,22 @@ public class CustomerTest {
     }
 
     @Test
-    public void should_return_correct_html_statement_given_customer_has_rent_one_child_movie_for_4_day() {
-        Movie childrenMovie = new Movie("Titanic", 2);
+    public void should_return_correct_html_statement_given_customer_has_rent_two_child_movie_for_4_day() {
+        Movie childrenMovie = new Movie("Roman Holiday", 2);
+        Movie childrenMovie2 = new Movie("Titanic", 2);
         Rental fourDayRental = new Rental(childrenMovie, 4);
+        Rental fourDayRenta2 = new Rental(childrenMovie2, 4);
         customer.addRental(fourDayRental);
+        customer.addRental(fourDayRenta2);
 
         String statement = customer.htmlStatement();
 
         System.out.println(statement);
 
-        assertEquals("<H1>Rentals for <EM>Jerry</EM></H1><P>\n" +
-                "Roman Holiday: 3.0<BR>\n" +
-                "Titanic: 3.0<BR>\n" +
-                "<P>You owe<EM>3.0</EM><P>\n" +
-                "On this rental you earned <EM>1</EM> frequent renter points<P>", statement);
+        assertEquals("<p><H1>Rental Record for <EM>Jerry</EM></H1</P>\n"
+                + "Roman Holiday: 3.0<BR>\n"
+                + "Titanic: 3.0<BR>\n"
+                + "<P>You owed <EM>6.0</EM></P>\n"
+                + "<P>On this rental You earned<EM>2</EM> frequent renter points</P>", statement);
     }
 }
