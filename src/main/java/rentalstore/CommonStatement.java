@@ -5,21 +5,20 @@ import java.util.Enumeration;
 public class CommonStatement extends AbstractStatement{
     protected String statement(Customer customer) {
         Enumeration rentals = customer.getRentals().elements();
-        String result = headerContent(customer);
+        StringBuilder result = new StringBuilder(headerContent(customer));
         while (rentals.hasMoreElements()) {
             Rental each = (Rental) rentals.nextElement();
-            result += "\t" + each.getMovie().getTitle() + "\t" + String.valueOf(each.getCharge()) + "\n";
+            result.append("\t").append(each.getMovie().getTitle()).append("\t").append(String.valueOf(each.getCharge())).append("\n");
         }
         //add footer lines
-        return footerContent(result, getTotalCharge(customer), getTotalFrequentRenterPoints(customer));
+        return footerContent(result.toString(), getTotalCharge(customer), getTotalFrequentRenterPoints(customer));
     }
 
-    public String headerContent(Customer customer) {
-        String result = "Rental Record for " + customer.getName() + "\n";
-        return result;
+    private String headerContent(Customer customer) {
+        return "Rental Record for " + customer.getName() + "\n";
     }
 
-    public String footerContent(String result, double totalAmount, int frequentRenterPoints){
+    private String footerContent(String result, double totalAmount, int frequentRenterPoints){
         result += "Amount owed is" + String.valueOf(totalAmount) + "\n";
         result += "You earned" + String.valueOf(frequentRenterPoints) + " frequent renter points";
         return result;

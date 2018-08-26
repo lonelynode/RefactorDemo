@@ -4,7 +4,7 @@ import java.util.Enumeration;
 
 public abstract class AbstractStatement {
     protected abstract String statement(Customer customer);
-    protected double getTotalCharge(Customer customer) {
+    double getTotalCharge(Customer customer) {
         double result = 0;
         Enumeration rentals = customer.getRentals().elements();
         while (rentals.hasMoreElements()) {
@@ -14,7 +14,7 @@ public abstract class AbstractStatement {
         return result;
     }
 
-    protected int getTotalFrequentRenterPoints(Customer customer) {
+    int getTotalFrequentRenterPoints(Customer customer) {
         int result = 0;
         Enumeration rentals = customer.getRentals().elements();
         while (rentals.hasMoreElements()) {

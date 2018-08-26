@@ -1,23 +1,23 @@
 package rentalstore;
 
-public class Rental {
+class Rental {
     private Movie movie;
     private int dayRented;
 
-    public Rental(Movie movie, int dayRented) {
+    Rental(Movie movie, int dayRented) {
         this.movie = movie;
         this.dayRented = dayRented;
     }
 
-    public Movie getMovie() {
+    Movie getMovie() {
         return movie;
     }
 
-    public int getDayRented() {
+    private int getDayRented() {
         return dayRented;
     }
 
-    public double getCharge() {
+    double getCharge() {
         double result = 0;
         switch (this.getMovie().getPriceCode()) {
             case Movie.REGULAR:

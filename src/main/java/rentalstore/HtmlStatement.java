@@ -11,21 +11,19 @@ public class HtmlStatement extends AbstractStatement{
     On this rental you earned <EM>2</EM> frequent renter points<P>
      */
     protected String statement(Customer customer) {
-        int frequentRenterPoints = 0;
         Enumeration rentals = customer.getRentals().elements();
-        String result = headerContent(customer);
+        StringBuilder result = new StringBuilder(headerContent(customer));
         while (rentals.hasMoreElements()) {
             Rental each = (Rental) rentals.nextElement();
             //show figures for this rental
-            result += each.getMovie().getTitle() + ": " + String.valueOf(each.getCharge()) + "<BR>\n";
+            result.append(each.getMovie().getTitle()).append(": ").append(String.valueOf(each.getCharge())).append("<BR>\n");
         }
         //add footer lines
-        return footerContent(result, getTotalCharge(customer), getTotalFrequentRenterPoints(customer));
+        return footerContent(result.toString(), getTotalCharge(customer), getTotalFrequentRenterPoints(customer));
     }
 
-    public String headerContent(Customer customer) {
-        String result = "<p><H1>Rental Record for <EM>" + customer.getName() + "</EM></H1</P>\n";
-        return result;
+    private String headerContent(Customer customer) {
+        return "<p><H1>Rental Record for <EM>" + customer.getName() + "</EM></H1</P>\n";
     }
 
     public String footerContent(String result, double totalAmount, int frequentRenterPoints){
