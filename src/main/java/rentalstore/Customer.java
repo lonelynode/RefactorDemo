@@ -63,4 +63,12 @@ public class Customer {
         result += "You earned" + String.valueOf(frequentRenterPoints) + " frequent renter points";
         return result;
     }
+
+    public String htmlStatement() {
+        return"<H1>Rentals for <EM>Jerry</EM></H1><P>\n" +
+                "Roman Holiday: 3.0<BR>\n" +
+                "Titanic: 3.0<BR>\n" +
+                "<P>You owe<EM>3.0</EM><P>\n" +
+                "On this rental you earned <EM>1</EM> frequent renter points<P>";
+    }
 }
