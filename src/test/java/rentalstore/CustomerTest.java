@@ -118,4 +118,20 @@ public class CustomerTest {
                 + "<P>You owed <EM>6.0</EM></P>\n"
                 + "<P>On this rental You earned<EM>2</EM> frequent renter points</P>", statement);
     }
+
+    @Test
+    public void should_return_correct_html_statement_given_customer_has_rent_one_Literature_movie_for_1_day() {
+        Movie LiteratureMovie = new LiteratureMovie("Macbeth");
+        Rental fourDayRental = new Rental(LiteratureMovie, 1);
+        customer.addRental(fourDayRental);
+
+        String statement = customer.htmlStatement();
+
+        System.out.println(statement);
+
+        assertEquals("<p><H1>Rental Record for <EM>Jerry</EM></H1</P>\n"
+                + "Macbeth: 6.0<BR>\n"
+                + "<P>You owed <EM>6.0</EM></P>\n"
+                + "<P>On this rental You earned<EM>1</EM> frequent renter points</P>", statement);
+    }
 }
